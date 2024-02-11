@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/authenticate.html}">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!--Search box-->
+    <div class="card">
+        <div class="card-header">User Management</div>
+        <div class="card-body">
+            <form action="#" class="row">
+                <div class="col-auto">
+                    <select name="status" id="status" class="form-select">
+                        <option value="">All Users</option>
+                        <option value="Active">Active</option>
+                        <option value="Removed">Removed</option>
+                    </select>
+                </div>
+               <div class="col-auto">
+                   <input type="text" class="form-control" placeholder="Name">
+               </div>
+                <div class="col-auto">
+                   <input type="date" class="form-control">
+               </div>
+                <div class="col">
+                    <button class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--Search box-->
+
+    <table class="table table-striped mt-4">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Aung Aung</td>
+            <td>Active</td>
+            <td>0940623524</td>
+            <td>aung@gmail.com </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
