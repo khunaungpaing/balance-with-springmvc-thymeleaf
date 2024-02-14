@@ -7,8 +7,26 @@
 </head>
 <body>
 <!--    Change Password -->
-<div id="changePassword" th:fragment="changePassword">
-    <h1>Change Password</h1>
+<div id="changePassword" class="modal fade" tabindex="-1" aria-hidden="true" th:fragment="changePassword">
+    <div class="modal-dialog">
+        <form th:action="@{/user/changePass}" method="post" class="modal-content">
+            <div class="modal-header">
+                <h5>Change Password</h5>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="oldPass" class="mb-1">Old Password</label>
+                    <input type="password" class="form-control" id="oldPass" placeholder="Enter old password">
+
+                    <label for="newPass" class="mb-1">New Password</label>
+                    <input type="password" class="form-control" id="newPass" placeholder="Enter new password">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">Change Password</button>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
 </html>

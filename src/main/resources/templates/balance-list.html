@@ -30,7 +30,7 @@
 
                 <div class="col-auto">
                     <button class="btn btn-primary">Search</button>
-                    <a href="#" class="btn btn-danger">Add New</a>
+                    <a th:href="@{'/user/balance/add/'+${type}}" class="btn btn-danger">Add New</a>
                 </div>
             </form>
         </div>
@@ -48,11 +48,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr class="align-middle">
             <td>2022/5/10</td>
             <td>Student Fees</td>
             <td>Java Basic Online Course</td>
             <td class="text-end">150,000</td>
+            <td class="text-end"><a th:href="@{/user/balance/1}" class="btn btn-sm btn-primary">Details</a></td>
         </tr>Amount
         </tbody>
     </table>
