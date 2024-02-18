@@ -6,27 +6,101 @@
     <title>Title</title>
 </head>
 <body>
+<!--   Contact Form -->
+<div id="contactModal" class="modal fade" tabindex="-1" aria-hidden="true" th:fragment="contactForm">
+    <div class="modal-dialog">
+        <form th:action="@{/user/profile/contact}" method="post" class="modal-content">
+            <div class="modal-header">
+                <h5><i class="bi-cursor me-2"></i>Contact Information</h5>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="phonenumber" class="mb-1">Phone Number</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="bi-telephone"></i>
+                        </span>
+                        <input type="tel" name="phone" class="form-control" id="phonenumber" placeholder="Enter phone number">
+                    </div>
+
+                    <label for="emailaddress" class="mb-1">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi-envelope"></i>
+                        </span>
+                        <input type="email" name="email" class="form-control" id="emailaddress" placeholder="Enter email address">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary"><i class="bi-save me-2"></i>Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!--    Change Password -->
 <div id="changePassword" class="modal fade" tabindex="-1" aria-hidden="true" th:fragment="changePassword">
     <div class="modal-dialog">
         <form th:action="@{/user/changePass}" method="post" class="modal-content">
             <div class="modal-header">
-                <h5>Change Password</h5>
+                <h5><i class="bi-gear me-2"></i>Change Password</h5>
             </div>
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="oldPass" class="mb-1">Old Password</label>
-                    <input type="password" class="form-control" id="oldPass" placeholder="Enter old password">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="bi-key"></i>
+                        </span>
+                        <input type="password" class="form-control" id="oldPass" placeholder="Enter old password">
+                    </div>
 
                     <label for="newPass" class="mb-1">New Password</label>
-                    <input type="password" class="form-control" id="newPass" placeholder="Enter new password">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi-key-fill"></i>
+                        </span>
+                        <input type="password" class="form-control" id="newPass" placeholder="Enter new password">
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary">Change Password</button>
+                <button class="btn btn-primary"><i class="bi-save me-2"></i>Change Password</button>
             </div>
         </form>
     </div>
 </div>
+
+<!--   User status change Form -->
+<div th:fragment="userStatusChange(user)">
+    <div th:id="${'userStatusChangeModal'+user.id}" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form th:action="@{/admin/users/status}" method="post" class="modal-content">
+                <input type="hidden" name="id" th:value="${user.id}"/>
+                <input type="hidden" name="status" th:value="${user.status}"/>
+                <div class="modal-header">
+                    <h5><i class="bi-shield me-2"></i>Change Status</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="username" class="mb-1">Username</label>
+                        <span id="username" class="form-control mb-2" th:text="${user.name}"></span>
+
+                        <label for="status" class="mb-1">Last Status</label>
+                        <span id="status" class="form-control mb-2" th:text="${user.status?'Active':'Suspend'}"></span>
+
+                        <label for="cstatus" class="mb-1">Change Status</label>
+                        <span id="cstatus" class="form-control" th:text="${!user.status?'Active':'Suspend'}"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary"><i class="bi-save me-2"></i>OK</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

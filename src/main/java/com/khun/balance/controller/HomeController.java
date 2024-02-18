@@ -9,10 +9,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("user/home")
 public class HomeController {
-    @GetMapping("/{type}")
-    String income(ModelMap model, @PathVariable String type){
-        model.put("title","incomes".equals(type)?"Income Management":"Expense Management");
-        model.put("type", type);
-        return "balance-list";
-    }
+
 }

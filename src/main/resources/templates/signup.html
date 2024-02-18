@@ -9,20 +9,38 @@
 <body>
 <div layout:fragment="content">
     <h3 class="display-5">Balance Management</h3>
-    <form th:action="@{signup}" method="post" class="card">
-        <div class="card-header">Sign Up</div>
+    <form th:action="@{signup}" th:object="${form}" method="post" class="card">
+        <div class="card-header"><i class="bi-person-plus me-2"></i>Sign Up Form</div>
         <div class="card-body">
             <div class="mb-3">
                 <label for="name" class="mb-1">Name</label>
-                <input id="name" type="text" class="form-control" placeholder="Enter Name">
+                <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi-person-circle"></i>
+                        </span>
+                    <input id="name" th:field="*{name}" type="text" class="form-control" placeholder="Enter Name">
+                </div>
+                <span th:errors="*{name}" class="text-danger">Error</span>
             </div>
             <div class="mb-3">
                 <label for="loginId" class="mb-1">Login ID</label>
-                <input id="loginId" type="text" class="form-control" placeholder="Enter Login ID">
+                <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi-lock"></i>
+                        </span>
+                    <input id="loginId" th:field="*{loginId}" type="text" class="form-control" placeholder="Enter Login ID">
+                </div>
+                <span th:errors="*{loginId}" class="text-danger">Error</span>
             </div>
             <div>
                 <label for="pass" class="mb-1">Password</label>
-                <input id="pass" type="password" class="form-control" placeholder="Enter Password">
+                <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi-key"></i>
+                        </span>
+                    <input id="pass" th:field="*{password}" type="password" class="form-control" placeholder="Enter Password">
+                </div>
+                <span th:errors="*{password}" class="text-danger">Error</span>
             </div>
         </div>
         <div class="card-footer">

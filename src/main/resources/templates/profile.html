@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/authenticate.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="row mb-4">
+      <div class="col">
+        <div class="card">
+          <div class="card-header"><i class="bi-person-circle me-2"></i>Profile</div>
+          <div class="card-body">
+            <div class="input-group mb-2">
+              <span class="input-group-text"><i class="bi-person"></i></span>
+              <span class="form-control" th:text="${user.name}">Username</span>
+            </div>
+
+            <div class="input-group mb-2">
+              <span class="input-group-text"><i class="bi-lock"></i></span>
+              <span class="form-control" th:text="${user.loginId }">LoginID</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between">
+            <span>
+              <i class="bi-cursor me-2"></i>Contact
+            </span>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#contactModal"><i class="bi-pencil"></i></a>
+          </div>
+          <div class="card-body">
+            <div class="input-group mb-2">
+              <span class="input-group-text"><i class="bi-telephone"></i></span>
+              <span class="form-control" th:text="${user.phone==null? 'Undefined': user.phone}">Phone</span>
+            </div>
+
+            <div class="input-group mb-2">
+              <span class="input-group-text"><i class="bi-envelope"></i></span>
+              <span class="form-control" th:text="${user.email==null? 'Undefined': user.email}">Email</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><i class="bi-door-open me-2"></i>Access Logs</div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Access Type</th>
+            <th>Times</th>
+            <th>Remark</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+
+    <div th:replace="~{/fragments/modals :: contactForm}" id="contactForm"></div>
+  </div>
+
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/authenticate.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Access Denied</title>
+</head>
+<body>
+    <div class="object-fit-cover" layout:fragment="content">
+        <img class="object-fit-cover" th:src="@{/resources/img/access-denied.webp}" alt="access-denied">
+    </div>
+</body>
+</html>

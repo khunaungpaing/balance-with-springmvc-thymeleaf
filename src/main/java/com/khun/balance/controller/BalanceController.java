@@ -1,7 +1,10 @@
 package com.khun.balance.controller;
 
-import com.khun.balance.entity.Balance;
-import com.khun.balance.entity.Balance.Type;
+import com.khun.balance.domain.entity.Type;
+import com.khun.balance.repo.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +16,22 @@ import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/user/balance")
+@Slf4j
+@RequiredArgsConstructor
 public class BalanceController {
+    private final UserRepository userRepository;
+    @GetMapping("report")
+    String report(){
+        return "balance-report";
+    }
+    @GetMapping("/{type}")
+    String income(ModelMap model, @PathVariable String type){
+        model.put("title","incomes".equals(type)?"Income Management":"Expense Management");
+        model.put("type", type);
+        log.info("users : {}", userRepository.findAll());
+        return "balance-list";
+    }
+
     @GetMapping("/add/{type}")
     public String addNew(@PathVariable String type, ModelMap model) {
         model.put("title","incomes".equals(type)?"Add New Income":"Add New Expense");

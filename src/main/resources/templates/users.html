@@ -14,24 +14,24 @@
 <div layout:fragment="content">
     <!--Search box-->
     <div class="card">
-        <div class="card-header">User Management</div>
+        <div class="card-header"><i class="bi-people me-2"></i>User Management</div>
         <div class="card-body">
-            <form action="#" class="row">
+            <form action="" class="row">
                 <div class="col-auto">
                     <select name="status" id="status" class="form-select">
-                        <option value="">All Users</option>
-                        <option value="Active">Active</option>
-                        <option value="Removed">Removed</option>
+                        <option th:selected="${#strings.equals(param.status,'')}" value="">All Users</option>
+                        <option th:selected="${#strings.equals(param.status,'true')}" value="true">Active</option>
+                        <option th:selected="${#strings.equals(param.status,'false')}" value="false">Removed</option>
                     </select>
                 </div>
                <div class="col-auto">
-                   <input type="text" class="form-control" placeholder="Name">
+                   <input name="name" type="text" th:value="${param.name}" class="form-control" placeholder="Name">
                </div>
                 <div class="col-auto">
-                   <input type="date" class="form-control">
+                   <input name="phone" type="tel" th:value="${param.phone}" class="form-control" placeholder="Search phone">
                </div>
                 <div class="col">
-                    <button class="btn btn-primary">Search</button>
+                    <button class="btn btn-primary"><i class="bi-search me-2"></i>Search</button>
                 </div>
             </form>
         </div>
@@ -51,13 +51,21 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>Aung Aung</td>
-            <td>Active</td>
-            <td>0940623524</td>
-            <td>aung@gmail.com </td>
-
+        <tr th:each="user :${userList}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.name}">Aung Aung</td>
+            <td th:text="${user.status ? 'Active': 'Suspend'}">Active</td>
+            <td th:text="${user.phone ==null?'undefined':user.phone}">0940623524</td>
+            <td th:text="${user.email==null?'undefined':user.email}">aung@gmail.com </td>
+            <td >
+                <a href="#" data-bs-toggle="modal" th:data-bs-target="${'#userStatusChangeModal'+user.id}" class="nav-link">
+                    <i th:if="${user.status}" class="bi-trash text-danger"></i>
+                    <i th:unless="${user.status}" class="bi-check-circle-fill text-success"></i>
+                </a>
+            </td>
+            <td>
+                <div th:replace="~{/fragments/modals :: userStatusChange(user=${user})}"></div>
+            </td>
         </tr>
         </tbody>
     </table>
