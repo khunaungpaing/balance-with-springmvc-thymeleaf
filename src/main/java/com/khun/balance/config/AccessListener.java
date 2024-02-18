@@ -24,7 +24,6 @@ public class AccessListener {
     @Transactional
     void OnSuccess(AuthenticationSuccessEvent event){
         var username = event.getAuthentication().getName();
-        log.info("{} is sing in",username);
         userAccessLogRepository.save(
                 UserAccessLog.builder()
                         .username(username)
@@ -37,7 +36,6 @@ public class AccessListener {
     @Transactional
     void OnFailure(AbstractAuthenticationFailureEvent event){
         var username = event.getAuthentication().getName();
-        log.info("{} is fail to sign in beacuse of {}",username,event.getException().getMessage());
         userAccessLogRepository.save(
                 UserAccessLog.builder()
                         .username(username)
@@ -54,7 +52,6 @@ public class AccessListener {
         event.getSecurityContexts().stream().findAny()
                 .ifPresent(auth->{
                      var username = auth.getAuthentication().getName();
-                     log.info("{} sign out", username);
                     userAccessLogRepository.save(
                             UserAccessLog.builder()
                                     .username(username)

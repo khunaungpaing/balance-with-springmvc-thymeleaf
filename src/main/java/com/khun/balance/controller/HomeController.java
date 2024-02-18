@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("user/home")
+@RequestMapping("/user/home")
 public class HomeController {
-
+    @GetMapping
+    String index(){
+        return "home";
+    }
 }

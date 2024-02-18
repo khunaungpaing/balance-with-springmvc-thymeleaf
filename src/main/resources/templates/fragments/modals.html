@@ -42,7 +42,8 @@
 <!--    Change Password -->
 <div id="changePassword" class="modal fade" tabindex="-1" aria-hidden="true" th:fragment="changePassword">
     <div class="modal-dialog">
-        <form th:action="@{/user/changePass}" method="post" class="modal-content">
+        <form th:action="@{/user/change-pass}" method="post" class="modal-content">
+            <input type="hidden" name="loginId" th:value="${#authentication.name}">
             <div class="modal-header">
                 <h5><i class="bi-gear me-2"></i>Change Password</h5>
             </div>
@@ -53,7 +54,7 @@
                         <span class="input-group-text">
                             <i class="bi-key"></i>
                         </span>
-                        <input type="password" class="form-control" id="oldPass" placeholder="Enter old password">
+                        <input name="oldPassword" type="password" class="form-control" id="oldPass" placeholder="Enter old password">
                     </div>
 
                     <label for="newPass" class="mb-1">New Password</label>
@@ -61,7 +62,7 @@
                         <span class="input-group-text">
                             <i class="bi-key-fill"></i>
                         </span>
-                        <input type="password" class="form-control" id="newPass" placeholder="Enter new password">
+                        <input name="newPassword" type="password" class="form-control" id="newPass" placeholder="Enter new password">
                     </div>
                 </div>
             </div>

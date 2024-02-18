@@ -1,5 +1,7 @@
 package com.khun.balance.controller;
 
+import com.khun.balance.domain.entity.Role;
+import com.khun.balance.domain.form.ChangePasswordForm;
 import com.khun.balance.domain.form.SignUpForm;
 import com.khun.balance.service.UserService;
 import jakarta.validation.Valid;
@@ -14,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,6 +24,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class SecurityController {
 
     private final UserService userService;
+
+    @GetMapping("/")
+    public String index() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth != null && auth.getAuthorities().stream().anyMatch(
+                a -> a.getAuthority().equals(Role.Admin.name()) || a.getAuthority().equals(Role.Member.name()))) {
+            return "redirect:/user/home";
+        }
+
+        return "signin";
+    }
 
     @GetMapping("/signin")
     public String loadSignIn(){
@@ -45,8 +60,10 @@ public class SecurityController {
         return "redirect:/";
     }
 
-    @PostMapping("user/changePass")
-    public String changePass(){
+    @PostMapping("user/change-pass")
+    public String changePass(@ModelAttribute ChangePasswordForm form, RedirectAttributes redirectAttr){
+        userService.changePassword(form);
+        redirectAttr.addFlashAttribute("message","Your password has bean changed successfully");
         return "redirect:/";
     }
 

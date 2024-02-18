@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="pagenation(page)" >
+    <div class="d-flex justify-content-between">
+        <div class="d-flex align-items-center">
+            <span>size</span>
+            <label>
+                <select id="pageSizeChangeSelect" th:if="${#lists.size(page.size) gt 0}" th:attr="data-form-id=${page.sizeChangeFormId}" class="ms-2 form-select">
+                    <option th:each="size : ${page.size}"  th:selected="${#strings.equals(param.size, size)}" th:value="${size}" th:text="${size}"></option>
+                </select>
+            </label>
+        </div>
+        <div>
+            <a th:href="@{${page.url}(page=0)} + ${page.param}" th:classappend="${page.first}?'disabled':''" class="btn btn-outline-secondary me-1">
+                <i class="bi-skip-start"></i>
+            </a>
+            <a th:href="@{${page.url}(page=${page.current-1})}+ ${page.param}"  th:classappend="${page.first}?'disabled':''" class="btn btn-outline-secondary me-1">
+                <i class="bi-skip-backward"></i>
+            </a>
+            <a th:each="pageNum : ${page.pages}"
+               th:text="${pageNum+1}"
+               th:href="@{${page.url}(page=${pageNum})}+ ${page.param}"
+               th:classappend="${page.current == pageNum}?'disabled btn-secondary':'btn-outline-secondary'"
+               class="btn me-1">
+            </a>
+            <a th:href="@{${page.url}(page=${page.current + 1})}+ ${page.param}"  th:classappend="${page.last}?'disabled':''" class="btn btn-outline-secondary me-1">
+                <i class="bi-skip-forward"></i>
+            </a>
+            <a th:href="@{${page.url}(page=${page.total - 1})}+ ${page.param}" th:classappend="${page.last}?'disabled':''" class="btn btn-outline-secondary me-1">
+                <i class="bi-skip-end"></i>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

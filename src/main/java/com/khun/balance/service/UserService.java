@@ -2,8 +2,11 @@ package com.khun.balance.service;
 
 import com.khun.balance.domain.entity.Role;
 import com.khun.balance.domain.entity.User;
+import com.khun.balance.domain.form.ChangePasswordForm;
 import com.khun.balance.domain.form.SignUpForm;
 import com.khun.balance.domain.vo.UserVo;
+import com.khun.balance.exception.BalanceAppException;
+import com.khun.balance.exception.WrongPasswordException;
 import com.khun.balance.repo.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -58,5 +61,26 @@ public class UserService {
     @Transactional
     public void changeStatus(Long id, boolean status) {
         userRepository.findById(id).ifPresent(user -> user.setActive(status));
+    }
+
+    @Transactional
+    public void changePassword(ChangePasswordForm form) {
+        if(!StringUtils.hasLength(form.getOldPassword())){
+            System.out.println("hellll");
+            throw new BalanceAppException("Please enter old password");
+        }
+        if(!StringUtils.hasLength(form.getNewPassword())){
+            System.out.println("heee");
+            throw new BalanceAppException("Please enter new password");
+        }
+        if(form.getNewPassword().equals(form.getOldPassword())){
+            System.out.println("wefwef");
+            throw new BalanceAppException("old and new password must not be same");
+        }
+        var user = userRepository.findByLoginId(form.getLoginId()).orElseThrow();
+        if(!passwordEncoder.matches(form.getOldPassword(),user.getPassword())){
+            throw new BalanceAppException("Please check your old password");
+        }
+        user.setPassword(passwordEncoder.encode(form.getNewPassword()));
     }
 }

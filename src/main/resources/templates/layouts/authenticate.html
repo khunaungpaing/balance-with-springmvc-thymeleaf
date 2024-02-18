@@ -21,7 +21,8 @@
                     <a th:href="@{/user/balance/incomes}" class="list-group-item"><i class="bi-arrow-up-circle me-2"></i>Incomes</a>
                     <a th:href="@{/user/balance/expenses}" class="list-group-item"><i class="bi-arrow-down-circle me-2"></i>Expenses</a>
                     <a sec:authorize="hasAuthority('Admin')" th:href="@{/admin/users}" class="list-group-item"><i class="bi-person me-2"></i>User Management</a>
-                    <a th:href="@{/user/profile}" class="list-group-item"><i class="bi-person-circle me-2"></i>Profile</a>
+                    <a th:href="@{/user/profile}" sec:authorize="hasAuthority('Member')" class="list-group-item"><i class="bi-person-circle me-2"></i>Profile</a>
+                    <a th:href="@{/admin/access-logs}" sec:authorize="hasAuthority('Admin')" class="list-group-item"><i class="bi-shield me-2"></i>Access Logs</a>
                     <a href="#" data-bs-toggle="modal" data-bs-target="#changePassword" class="list-group-item"><i class="bi-key me-2"></i>Change Password</a>
                     <a th:href="@{/logout}" class="list-group-item"><i class="bi-door-open me-2"></i>Logout</a>
                 </div>
@@ -32,5 +33,6 @@
         </div>
     </div>
     <div th:replace="~{/fragments/modals :: changePassword}" id="changePasswordFragment"></div>
+    <script th:src="@{/resources/js/common.js}"></script>
 </body>
 </html>
