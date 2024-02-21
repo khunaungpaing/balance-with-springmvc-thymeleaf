@@ -18,8 +18,8 @@
                 <div class="list-group">
                     <a th:href="@{/}" class="list-group-item"><i class="bi-house me-2"></i>Home</a>
                     <a th:href="@{/user/balance/report}" class="list-group-item"><i class="bi-bar-chart me-2"></i>Balance Reports</a>
-                    <a th:href="@{/user/balance/incomes}" class="list-group-item"><i class="bi-arrow-up-circle me-2"></i>Incomes</a>
-                    <a th:href="@{/user/balance/expenses}" class="list-group-item"><i class="bi-arrow-down-circle me-2"></i>Expenses</a>
+                    <a th:href="@{/user/balance/Income}" class="list-group-item"><i class="bi-arrow-up-circle me-2"></i>Incomes</a>
+                    <a th:href="@{/user/balance/Expense}" class="list-group-item"><i class="bi-arrow-down-circle me-2"></i>Expenses</a>
                     <a sec:authorize="hasAuthority('Admin')" th:href="@{/admin/users}" class="list-group-item"><i class="bi-person me-2"></i>User Management</a>
                     <a th:href="@{/user/profile}" sec:authorize="hasAuthority('Member')" class="list-group-item"><i class="bi-person-circle me-2"></i>Profile</a>
                     <a th:href="@{/admin/access-logs}" sec:authorize="hasAuthority('Admin')" class="list-group-item"><i class="bi-shield me-2"></i>Access Logs</a>
@@ -28,6 +28,8 @@
                 </div>
             </div>
             <div class="col">
+<!--                <h1 th:text="${message}"></h1>-->
+                <div class="alert alert-warning" th:unless="${message} eq null" th:text="${message}"></div>
                 <div layout:fragment="content"></div>
             </div>
         </div>

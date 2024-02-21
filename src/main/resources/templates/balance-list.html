@@ -9,7 +9,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Content</title>
+    <title>List</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -19,18 +19,18 @@
         <div class="card-body">
             <form action="#" class="row">
                 <div class="col-auto">
-                    <input type="date" id="dateFrom" class="form-control">
+                    <input name="dateFrom" th:value="${param.dateFrom}" type="date" id="dateFrom" class="form-control">
                 </div>
                 <div class="col-auto">
-                    <input type="date" id="dateTo" class="form-control">
+                    <input name="dateTo"  th:value="${param.dateTo}" type="date" id="dateTo" class="form-control">
                 </div>
-                <div class="col-3">
-                    <input type="text" placeholder="Category" class="form-control">
+                <div class="col">
+                    <input name="keyword" th:value="${param.keyword}" type="text" placeholder="Search Keyword" class="form-control">
                 </div>
 
                 <div class="col-auto">
                     <button class="btn btn-primary"><i class="bi-search me-2"></i>Search</button>
-                    <a th:href="@{'/user/balance/add/'+${type}}" class="btn btn-danger"><i class="bi-plus me-2"></i>Add New</a>
+                    <a th:href="@{/user/balance-edit(type=${type})}" class="btn btn-danger"><i class="bi-plus me-2"></i>Add New</a>
                 </div>
             </form>
         </div>
@@ -42,22 +42,30 @@
         <tr>
             <th>Date</th>
             <th>Category</th>
-            <th>Remark</th>
-            <th class="text-end">Amount</th>
+            <th>Item</th>
+            <th class="text-end">Unit Price</th>
+            <th class="text-end">Quantity</th>
+            <th class="text-end">Total</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr class="align-middle">
-            <td>2022/5/10</td>
-            <td>Student Fees</td>
-            <td>Java Basic Online Course</td>
-            <td class="text-end">150,000</td>
-            <td class="text-end"><a th:href="@{/user/balance/1}" class="btn btn-sm btn-primary">Details</a></td>
-        </tr>Amount
+        <tr th:each="item:${list}" class="align-middle">
+            <td th:text="${#temporals.format(item.balance.date,'yyyy-MM-dd')}">2022/5/10</td>
+            <td th:text="${item.balance.category}">Student Fees</td>
+            <td th:text="${item.item}">Java Basic Online Course</td>
+            <td th:text="${#numbers.formatInteger(item.unitPrice,1,'COMMA')}" class="text-end">150,000</td>
+            <td th:text="${item.quantity}" class="text-end">10</td>
+            <td th:text="${#numbers.formatInteger(item.unitPrice*item.quantity,1,'COMMA')}" class="text-end"></td>
+            <td>
+                <a th:href="@{/user/balance/details/}+${item.balance.id}" class="nav-link">
+                    <i class="bi-list-check"></i>
+                </a>
+            </td>
+        </tr>
         </tbody>
     </table>
-
+    <div th:insert="~{/fragments/component::pagenation(page=${pagination})}"></div>
 </div>
 </body>
 </html>

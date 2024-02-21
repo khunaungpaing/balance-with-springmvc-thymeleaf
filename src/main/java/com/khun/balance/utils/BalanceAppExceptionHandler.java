@@ -9,10 +9,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 @ControllerAdvice
 public class BalanceAppExceptionHandler {
     @ExceptionHandler(value = BalanceAppException.class)
-    String handle(BalanceAppException e, HttpServletRequest request){
-        System.out.println("heelleoel");
-        RequestContextUtils.getOutputFlashMap(request)
-                .put("message",e.getMessage());
-        return "redirect:/";
+    String handleBalanceAppException(BalanceAppException e, HttpServletRequest req) {
+        RequestContextUtils.getOutputFlashMap(req).put("message", e.getMessage());
+        return "redirect:/user/home";
     }
 }

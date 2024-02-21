@@ -64,7 +64,7 @@ public class SecurityController {
     public String changePass(@ModelAttribute ChangePasswordForm form, RedirectAttributes redirectAttr){
         userService.changePassword(form);
         redirectAttr.addFlashAttribute("message","Your password has bean changed successfully");
-        return "redirect:/";
+        return "redirect:/user/home";
     }
 
     @ModelAttribute(name = "form")

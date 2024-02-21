@@ -7,9 +7,8 @@
 </head>
 <body>
 <div th:fragment="pagenation(page)" >
-    <div class="d-flex justify-content-between">
+    <div th:if="${page.show}" class="d-flex justify-content-between">
         <div class="d-flex align-items-center">
-            <span>size</span>
             <label>
                 <select id="pageSizeChangeSelect" th:if="${#lists.size(page.size) gt 0}" th:attr="data-form-id=${page.sizeChangeFormId}" class="ms-2 form-select">
                     <option th:each="size : ${page.size}"  th:selected="${#strings.equals(param.size, size)}" th:value="${size}" th:text="${size}"></option>
@@ -36,6 +35,45 @@
                 <i class="bi-skip-end"></i>
             </a>
         </div>
+    </div>
+</div>
+<!--balance detail list-->
+<div th:fragment="balanceDetailsList(dto,readonly)" class="card mt-4">
+    <div class="card-header"><i class="bi-list-check me-2"></i><span th:text="${dto.header.type}"></span> Details List</div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>Item Name</th>
+                <th class="text-end">Unit Price</th>
+                <th class="text-end">Quantity</th>
+                <th class="text-end">Price</th>
+                <th th:unless="${readonly}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item,i : ${dto.validItems}">
+                <td th:text="${i.index+1}">1</td>
+                <td th:text="${item.item}">Java Basic Online</td>
+                <td th:text="${#numbers.formatInteger(item.unitPrice,1,'COMMA')}" class="text-end">150,000</td>
+                <td th:text="${item.quantity}" class="text-end">3</td>
+                <td th:text="${#numbers.formatInteger((item.unitPrice * item.quantity),1,'COMMA')}" class="text-end">450,000</td>
+                <td th:unless="${readonly}">
+                    <a th:href="@{/user/balance-edit/item(index=${i.index})}" class="nav-link text-danger">
+                        <i class="bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr th:if="${readonly}">
+                <th class="text-end" colspan="3">Total</th>
+                <th th:text="${dto.totalCount}" class="text-end">3</th>
+                <th th:text="${#numbers.formatInteger(dto.total,1,'COMMA')}" class="text-end">450,000</th>
+            </tr>
+            </tfoot>
+        </table>
     </div>
 </div>
 </body>

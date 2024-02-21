@@ -65,22 +65,25 @@ public class UserService {
 
     @Transactional
     public void changePassword(ChangePasswordForm form) {
-        if(!StringUtils.hasLength(form.getOldPassword())){
-            System.out.println("hellll");
-            throw new BalanceAppException("Please enter old password");
+
+        if (!StringUtils.hasLength(form.getOldPassword())) {
+            throw new BalanceAppException("Old Password cannot be empty");
         }
-        if(!StringUtils.hasLength(form.getNewPassword())){
-            System.out.println("heee");
-            throw new BalanceAppException("Please enter new password");
+
+        if (!StringUtils.hasLength(form.getNewPassword())) {
+            throw new BalanceAppException("New Password cannot be empty");
         }
-        if(form.getNewPassword().equals(form.getOldPassword())){
-            System.out.println("wefwef");
-            throw new BalanceAppException("old and new password must not be same");
+
+        if (form.getNewPassword().equals(form.getOldPassword())) {
+            throw new BalanceAppException("Passwords cannot be the same");
         }
+
         var user = userRepository.findByLoginId(form.getLoginId()).orElseThrow();
-        if(!passwordEncoder.matches(form.getOldPassword(),user.getPassword())){
-            throw new BalanceAppException("Please check your old password");
+
+        if (!passwordEncoder.matches(form.getOldPassword(), user.getPassword())) {
+            throw new BalanceAppException("Wrong Old Password");
         }
+
         user.setPassword(passwordEncoder.encode(form.getNewPassword()));
     }
 }
